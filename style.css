@@ -1,0 +1,30 @@
+.nobel-cards {
+    background-color: aliceblue;
+    box-shadow: 2px;
+    min-height: 300px;
+    min-width: 100px;
+    display:grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 5px;
+    justify-content: space-between;
+    
+    
+    
+}
+.single-card-1 {
+    grid-column-start: 1;
+    grid-column-end: 2;
+    padding: 10px;
+}
+
+.single-card-2 {
+    grid-column-start: 2;
+    grid-column-end: 3;
+    padding: 10px;
+}
+
+.single-card-3 {
+    grid-column-start: 3;
+    grid-column-end: 4;
+    padding: 10px;
+}
