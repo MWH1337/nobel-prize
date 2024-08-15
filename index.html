@@ -10,9 +10,25 @@
     <nav>
         <a href="favorites.html" class="favorite-page">Favorite Nobel Winners</a>
     </nav>
-    <section class="nobel-cards">
+    <form>
+        <p>Search by name, year or category</p>
+        <label for="fname">Name:</label><br>
+        <input type="text" id="wholeName" name="wholeName" value="Sheldon"><br>
+        <label for="year">Choose a Year:</label><br>
+        <input type="text" id="year" name="year" value="1901"><br>
+        <input type="submit" value ="Submit"><br>
+        
+        <input type="radio" id="radioButtonOne" name="radioName" value="physicsPrize">
+        <label for="html">Physics</label><br>
+        <input type="radio" id="radioButtonTwo" name="radioName" value="chemistryPrize">
+        <label for="html">Chemistry</label><br>
+        <input type="radio" id="radioButtonThree" name="radioName" value="medicinePrize">
+        <label for="html">Medicine</label><br>
 
-        <section class="single-card-1">
+      </form>
+    <section class="nobel-cards">
+<!--
+        <section class="single-card">
             <h5 class="prize-category">Fysik</h5>
             <h5 class="prize-year">2022</h5>
             <h5 class="prize-winner">Sheldon Cooper</h5>
@@ -23,6 +39,12 @@
     
             </article>
         </section>
+        -->
+        
+
+        
+<!--
+        
 
         <section class="single-card-2">
             <h5 class="prize-category">Kemi</h5>
@@ -47,8 +69,12 @@
     
             </article>
         </section>
-
+        -->
+        
+        <section class="cardCollection"></section>
     </section>
+
+        
     
 
     <script src="index.js"></script>
