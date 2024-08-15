@@ -9,6 +9,7 @@ window.addEventListener("load", function() {
 });
 console.log(" 1 före FetchNobelPrizes");
 fetchNobelPrizes();
+
 console.log(" 2 Före managageSaerch");
 manageSearch();
 
@@ -30,9 +31,9 @@ async function fetchNobelPrizes() {
 }
 // läser in input från formuläret och anropar showCard för att visa önskade cards.
 async function manageSearch () {
-    let wholeName = document.getElementById('wholeName').value.trim();
-    let year = document.getElementById('year').value.trim();
-    let category = document.querySelector('input[name="category"]:checked')?.value;
+    let wholeName = await document.getElementById('wholeName').value.trim();
+    let year = await document.getElementById('year').value.trim();
+    let category = await document.querySelector('input[name="category"]:checked')?.value;
     console.log("6 Efter inläsning av search parametrar från formuläret");
     let NobelList = setPrizeInfoDynamic();
     console.log("7. Efter skapande av NobelList");
@@ -151,7 +152,10 @@ function setPrizeInfoDynamic() {
         
         cardCollectionEl.appendChild(nobelCardEl);
     
-    });
+    console.log("19.5");
+    }
+);
+    
     console.log("20. Efter forEeach i SetPrizeInfoDyn");
     //return myNobelList; // ny rad onsdag 
 }
