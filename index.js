@@ -20,6 +20,7 @@ async function fetchNobelPrizes() {
     localStorage.clear();
     let response = await fetch(
         "https://api.nobelprize.org/2.1/nobelPrizes?_ga=2.245907908.1581705046.1723449076-997263134.1723449076");
+        console.log("3.5 Före inläsning av data");
     let data = await response.json();
     console.log("4 Efter hämtning av data från API ");
     //console.log(data.nobelPrizes[0].category.en);
