@@ -7,60 +7,53 @@ window.addEventListener("load", function() {
  
     // Annan kod som behöver köras när sidan har laddats
 });
-console.log(" 1 före FetchNobelPrizes");
 getData();
+
+// Denna funktion anropar först en funktion som hämtar hem data från API. 
+// Därefter anropas en funktion som hämtar in sökning från användaren.
 async function getData() {
     await fetchNobelPrizes();
     manageSearch();
 }
 
 
-console.log(" 2 Före managageSaerch");
 
 
 
 
+// Denna funktion hämtar data från API och sparar därefter data i local Storage.
 async function fetchNobelPrizes() {
-    console.log("3 Före tömning av localStorage");
+
     localStorage.clear();
     let response = await fetch(
         "https://api.nobelprize.org/2.1/nobelPrizes?_ga=2.245907908.1581705046.1723449076-997263134.1723449076");
-        console.log("3.5 Före inläsning av data");
+        
     let data = await response.json();
-    console.log("4 Efter hämtning av data från API ");
-    //console.log(data.nobelPrizes[0].category.en);
+    
+    
     let nobelInfoList = [];
     localStorage.setItem("nobelInfoList", JSON.stringify(data));
-    // setPrizeInfo();
-    console.log("5 Efter sparande på localStorage");
+    
+    
     setPrizeInfoDynamic();
 }
 // läser in input från formuläret och anropar showCard för att visa önskade cards.
 async function manageSearch () {
     let wholeName = await document.getElementById('wholeName').value.trim();
     let year = await document.getElementById('year').value.trim();
-    let category = await document.querySelector('input[name="category"]:checked')?.value;
-    console.log("6 Efter inläsning av search parametrar från formuläret");
-    let NobelList = setPrizeInfoDynamic();
-    console.log("7. Efter skapande av NobelList");
-    console.log(typeof(NobelList));
+    let category = await document.querySelector('input[name="radioName"]:checked')?.value;
     
-
+    let NobelList = setPrizeInfoDynamic();
+    
+    
     
     try {
-        //console.log(NobelList);
-
-        //console.log(lname);
-        // Rensa alla kort från hemsidan
 
 
         // Loopa genom listan NobelList. Om inmatat namn matchar skapas motsvarande kort och visas på hemsidan
         NobelList.forEach((n) => {
             try {
-                console.log("8. Före test om search name matchar");
-                console.log('wholeName', wholeName);
-                console.log('year', year);
-                console.log('category', category);
+                
                 if (wholeName == n.laurates[0].knownName.en) {
                     console.log("Name found!!");
                     ShowOneCard(n);
@@ -81,50 +74,24 @@ async function manageSearch () {
                 
             
             catch {
-                console.log("9. error, name not found in data");
+                console.log("error, name not found in data");
             }
         });
        
     }
     catch(error) {
-        console.log(`10. Error 1 in search. Try again`);
+        console.log(` Error in search. Try again`);
     }
     
 }
-/*
-function ShowCard(searchParameter) {
-    let NobelList = setPriceInfoDynamic();
-    console.log("11. före for Each anropet");
 
-    // rensa listan 
-    let cardCollectionEl = document.querySelector('.cardCollection');
-    cardCollectionEl.innerHTML = '';
-    console.log("12.före genomlöpning av NobelList");
-
-    NobelList.forEach((n) => {
-        try {
-            let knownName = n.laurates[0].knownName.en;
-            let awardYear = n.awardYear;
-            let category = n.category.en;
-            if (searchParameter === knownName || searchParameter == awardYear || searchParameter === category.en) {
-                console.log("13. Före kortet visas");
-                showOneCard(n); // Visa kortet
-            }
-
-
-        } catch (error) {
-            console.log('14. error in search', error)
-        }
-        
-    })
-}
-*/
+// Denna funktion ska skapa korten dynamiskt och placera på hemsidan. Fungerar inte för stunden.
 function showOneCard (parameter) {
     // parameter: is all data for one prize
-    console.log("15. Före skapandet av card coll.");
+    
     let cardCollectionEl = document.querySelector('.cardCollection');
     cardCollectionEl.innerHTML = '';
-    console.log("16. Före skapandet av article");
+    
     try {
         let nobelCardEl = document.createElement('article');
         nobelCardEl.innerHTML = `
@@ -140,22 +107,20 @@ function showOneCard (parameter) {
     
     
         cardCollectionEl.appendChild(nobelCardEl);
-        console.log("17. Före utskrift av cardCollEl");
-        console.log(cardCollectionEl);
+        
 
 }
 
 
 
 
-
+// Denna funktion ska skapa en array med kort som innehåller data om 
+// Namn, årtal och priskategori för alla priser i local Storage.
 function setPrizeInfoDynamic() {
-    console.log("18. Före dekl av prizeRef")
+    
     let prizeRef = document.querySelectorAll('.single-card');
     let myNobelList = JSON.parse(localStorage.getItem("nobelInfoList")).nobelPrizes;
-    console.log(myNobelList);
     let cardCollectionEl = document.querySelector('.cardCollection');
-    console.log("19.Före for each i SetPrizeInfoDyn");
     try {
 
         myNobelList.forEach((n) => {
@@ -177,22 +142,22 @@ function setPrizeInfoDynamic() {
 
     
     
-    console.log("19.5");
+    
     }
     catch {
         console.log("wrong format in data");
     }
 
     
-    console.log("20. Efter forEeach i SetPrizeInfoDyn");
-    return myNobelList; // ny rad onsdag 
+    
+    return myNobelList; 
 }
 
 
 
 
 
-
+/* Dessa funktioner har ej hunnit implementerats
 
 function togglePrizeMoney() {
 
@@ -203,3 +168,4 @@ function displayAdditionalInfo() {
 function addToFavorites() {
 
 }
+*/
