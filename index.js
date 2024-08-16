@@ -8,10 +8,15 @@ window.addEventListener("load", function() {
     // Annan kod som behöver köras när sidan har laddats
 });
 console.log(" 1 före FetchNobelPrizes");
-fetchNobelPrizes();
+getData();
+async function getData() {
+    await fetchNobelPrizes();
+    manageSearch();
+}
+
 
 console.log(" 2 Före managageSaerch");
-manageSearch();
+
 
 
 
@@ -38,6 +43,7 @@ async function manageSearch () {
     console.log("6 Efter inläsning av search parametrar från formuläret");
     let NobelList = setPrizeInfoDynamic();
     console.log("7. Efter skapande av NobelList");
+    console.log(typeof(NobelList));
     
 
     
@@ -52,6 +58,9 @@ async function manageSearch () {
         NobelList.forEach((n) => {
             try {
                 console.log("8. Före test om search name matchar");
+                console.log('wholeName', wholeName);
+                console.log('year', year);
+                console.log('category', category);
                 if (wholeName == n.laurates[0].knownName.en) {
                     console.log("Name found!!");
                     ShowOneCard(n);
@@ -59,12 +68,12 @@ async function manageSearch () {
                 else if (year == n.awardYear) {
                     console.log("Year found!");
                     // Det finns 5 priser prt år.Anropet görs totalt 5 gånger. 
-                    ShowCard(n);
+                    ShowOneCard(n);
                     }
                 else if (category == n.category.en) {
                     console.log("Category found!");
                     // Görs för alla priser av vald kategori, totalt 5 gångner
-                    ShowCard(n);
+                    ShowOneCard(n);
                 }
                     
                 }
@@ -82,7 +91,7 @@ async function manageSearch () {
     }
     
 }
-
+/*
 function ShowCard(searchParameter) {
     let NobelList = setPriceInfoDynamic();
     console.log("11. före for Each anropet");
@@ -109,18 +118,26 @@ function ShowCard(searchParameter) {
         
     })
 }
-
+*/
 function showOneCard (parameter) {
     // parameter: is all data for one prize
     console.log("15. Före skapandet av card coll.");
     let cardCollectionEl = document.querySelector('.cardCollection');
+    cardCollectionEl.innerHTML = '';
     console.log("16. Före skapandet av article");
-    let nobelCardEl = document.createElement('article');
+    try {
+        let nobelCardEl = document.createElement('article');
         nobelCardEl.innerHTML = `
         <p>${parameter.category.en}</p>
         <p>${parameter.awardYear}</p>
         <p>${parameter.laureates[0].knownName.en}</p>
         `;
+
+    }
+    catch {
+        console.log("error, wrong format in data");
+    }
+    
     
         cardCollectionEl.appendChild(nobelCardEl);
         console.log("17. Före utskrift av cardCollEl");
@@ -136,29 +153,39 @@ function setPrizeInfoDynamic() {
     console.log("18. Före dekl av prizeRef")
     let prizeRef = document.querySelectorAll('.single-card');
     let myNobelList = JSON.parse(localStorage.getItem("nobelInfoList")).nobelPrizes;
-    //console.log(myNobelList);
+    console.log(myNobelList);
     let cardCollectionEl = document.querySelector('.cardCollection');
     console.log("19.Före for each i SetPrizeInfoDyn");
-    myNobelList.forEach((n) => {
-    
-        //console.log(n);
-        let nobelCardEl = document.createElement('article');
+    try {
 
-        nobelCardEl.innerHTML = `
-        <p>${n.category.en}</p>
-        <p>${n.awardYear}</p>
-        <p>${n.laureates[0].knownName.en}</p>
-        
-        `;
-        
-        cardCollectionEl.appendChild(nobelCardEl);
+        myNobelList.forEach((n) => {
+    
+            console.log(n);
+            let nobelCardEl = document.createElement('article');
+            console.log(n.laureates[0].knownName.en);
+    
+    
+            nobelCardEl.innerHTML = `
+            <p>${n.category.en}</p>
+            <p>${n.awardYear}</p>
+            <p>${n.laureates[0].knownName.en}</p>
+            
+            `;
+            
+            cardCollectionEl.appendChild(nobelCardEl);
+    });
+
+    
     
     console.log("19.5");
     }
-);
+    catch {
+        console.log("wrong format in data");
+    }
+
     
     console.log("20. Efter forEeach i SetPrizeInfoDyn");
-    //return myNobelList; // ny rad onsdag 
+    return myNobelList; // ny rad onsdag 
 }
 
 
